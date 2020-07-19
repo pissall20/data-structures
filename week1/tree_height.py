@@ -13,12 +13,19 @@ class TreeHeight:
         self.parent = list(map(int, sys.stdin.readline().split()))
 
     def compute_height(self):
-        depth = [1] * self.n
-        for i, num in enumerate(self.parent):
-            while num != -1:
-                depth[i] += 1
-                num = self.parent[num]
-        return max(depth)
+        height_arr = [0] * self.n
+        root = self.parent.index(-1)
+        height_arr[root] = 1
+        for vertex in range(self.n):
+            height = 0
+            current = vertex
+            while current != -1:
+                height += 1
+                current = self.parent[current]
+                if height_arr[current]:
+                    height_arr[vertex] = height_arr[current] + height
+                    break
+        return max(height_arr)
 
 
 def main():
